@@ -19,22 +19,22 @@
   <meta name="author" content="MaYunchao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="iotaiota是go语言的常量计数器，只能在常量的表达式中使用。 iota在const关键字出现时将被重置为0。&#x3D;&#x3D;const中每新增一行常量声明&#x3D;&#x3D;将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。 举个例子： 123456const (		n1 &#x3D; iota &#x2F;&#x2F;0		n2">
+    <meta name="description" content="Mapmap是一种key:value键值对的数据结构容器。map内部实现是哈希表(hash)。 map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。 map是引用类型的。 map的语法格式可以使用内建函数 make 也可以使用 map 关键字来定义 map 1234&#x2F;* 声明变量，默认 map 是 nil *&#x2F;var map_variable map[key_da">
 <meta property="og:type" content="article">
-<meta property="og:title" content="golang-03-iota">
-<meta property="og:url" content="https://bilbilmyc.github.io/2024/08/12/golang-03-iota/index.html">
+<meta property="og:title" content="golang-09-map">
+<meta property="og:url" content="https://bilbilmyc.github.io/2024/08/13/golang-09-map/index.html">
 <meta property="og:site_name" content="MaYunchao&#39;s Blog">
-<meta property="og:description" content="iotaiota是go语言的常量计数器，只能在常量的表达式中使用。 iota在const关键字出现时将被重置为0。&#x3D;&#x3D;const中每新增一行常量声明&#x3D;&#x3D;将使iota计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。 举个例子： 123456const (		n1 &#x3D; iota &#x2F;&#x2F;0		n2">
+<meta property="og:description" content="Mapmap是一种key:value键值对的数据结构容器。map内部实现是哈希表(hash)。 map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。 map是引用类型的。 map的语法格式可以使用内建函数 make 也可以使用 map 关键字来定义 map 1234&#x2F;* 声明变量，默认 map 是 nil *&#x2F;var map_variable map[key_da">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-08-12T14:37:52.000Z">
-<meta property="article:modified_time" content="2024-08-12T14:38:49.105Z">
+<meta property="article:published_time" content="2024-08-13T01:20:02.000Z">
+<meta property="article:modified_time" content="2024-08-13T01:20:29.335Z">
 <meta property="article:author" content="MaYunchao">
 <meta property="article:tag" content="Golang">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>golang-03-iota - MaYunchao&#39;s Blog</title>
+  <title>golang-09-map - MaYunchao&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -213,7 +213,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="golang-03-iota"></span>
+            <span id="subtitle" data-typed-text="golang-09-map"></span>
           
         </div>
 
@@ -224,8 +224,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-08-12 22:37" pubdate>
-          2024年8月12日 晚上
+        <time datetime="2024-08-13 09:20" pubdate>
+          2024年8月13日 上午
         </time>
       </span>
     
@@ -236,7 +236,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          314 字
+          573 字
         
       </span>
     
@@ -247,7 +247,7 @@
         
         
         
-          3 分钟
+          5 分钟
         
       </span>
     
@@ -293,27 +293,54 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">golang-03-iota</h1>
+            <h1 id="seo-header">golang-09-map</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="iota"><a href="#iota" class="headerlink" title="iota"></a>iota</h2><p><code>iota</code>是go语言的常量计数器，只能在常量的表达式中使用。</p>
-<p><strong><code>iota</code>在const关键字出现时将被重置为0。&#x3D;&#x3D;const中每新增一行常量声明&#x3D;&#x3D;将使<code>iota</code>计数一次(iota可理解为const语句块中的行索引)。 使用iota能简化定义，在定义枚举时很有用。</strong></p>
-<p>举个例子：</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>		n1 = <span class="hljs-literal">iota</span> <span class="hljs-comment">//0</span><br>		n2        <span class="hljs-comment">//1</span><br>		n3        <span class="hljs-comment">//2</span><br>		n4        <span class="hljs-comment">//3</span><br>	)<br></code></pre></td></tr></table></figure>
+                <h1 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h1><p>map是一种<code>key:value</code>键值对的数据结构容器。map内部实现是哈希表(<code>hash</code>)。</p>
+<p>map 最重要的一点是通过 key 来快速检索数据，key 类似于索引，指向数据的值。</p>
+<p>map是引用类型的。</p>
+<h2 id="map的语法格式"><a href="#map的语法格式" class="headerlink" title="map的语法格式"></a>map的语法格式</h2><p>可以使用内建函数 make 也可以使用 map 关键字来定义 map</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">/* 声明变量，默认 map 是 nil */</span><br><span class="hljs-keyword">var</span> map_variable <span class="hljs-keyword">map</span>[key_data_type]value_data_type<br><span class="hljs-comment">/* 使用 make 函数 */</span><br>map_variable = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[key_data_type]value_data_type)<br></code></pre></td></tr></table></figure>
 
-<h3 id="几个常见的iota示例"><a href="#几个常见的iota示例" class="headerlink" title="几个常见的iota示例:"></a>几个常见的<code>iota</code>示例:</h3><p>使用<code>_</code>跳过某些值</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>		n1 = <span class="hljs-literal">iota</span> <span class="hljs-comment">//0</span><br>		n2        <span class="hljs-comment">//1</span><br>		_<br>		n4        <span class="hljs-comment">//3</span><br>	)<br></code></pre></td></tr></table></figure>
+<p><code>map_variable</code>：map变量名称</p>
+<p><code>key_data_type</code>：key的数据类型</p>
+<p><code>value_data_type</code>：值得数据类型</p>
+<p><strong>实例</strong></p>
+<p>下面声明一个保存个人信息的map</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	m1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>)<br>	m1[<span class="hljs-string">&quot;name&quot;</span>] = <span class="hljs-string">&quot;tom&quot;</span><br>	m1[<span class="hljs-string">&quot;age&quot;</span>] = <span class="hljs-string">&quot;20&quot;</span><br>	m1[<span class="hljs-string">&quot;email&quot;</span>] = <span class="hljs-string">&quot;tom@gmail.com&quot;</span><br><br>	fmt.Printf(<span class="hljs-string">&quot;m1: %v\n&quot;</span>, m1)<br><br>	m2 := <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>&#123;<br>		<span class="hljs-string">&quot;name&quot;</span>:  <span class="hljs-string">&quot;kite&quot;</span>,<br>		<span class="hljs-string">&quot;age&quot;</span>:   <span class="hljs-string">&quot;20&quot;</span>,<br>		<span class="hljs-string">&quot;email&quot;</span>: <span class="hljs-string">&quot;kite@gmail.com&quot;</span>,<br>	&#125;<br><br>	fmt.Printf(<span class="hljs-string">&quot;m2: %v\n&quot;</span>, m2)<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p><code>iota</code>声明中间插队</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>		n1 = <span class="hljs-literal">iota</span> <span class="hljs-comment">//0</span><br>		n2 = <span class="hljs-number">100</span>  <span class="hljs-comment">//100</span><br>		n3 = <span class="hljs-literal">iota</span> <span class="hljs-comment">//2</span><br>		n4        <span class="hljs-comment">//3</span><br>	)<br>	<span class="hljs-keyword">const</span> n5 = <span class="hljs-literal">iota</span> <span class="hljs-comment">//0</span><br></code></pre></td></tr></table></figure>
+<p>运行结果</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim">m1: <span class="hljs-keyword">map</span>[age:<span class="hljs-number">20</span> emai<span class="hljs-variable">l:tom</span>@gmail.<span class="hljs-keyword">com</span> name:tom]<br>m2: <span class="hljs-keyword">map</span>[age:<span class="hljs-number">20</span> emai<span class="hljs-variable">l:kite</span>@gmail.<span class="hljs-keyword">com</span> name:kite]<br></code></pre></td></tr></table></figure>
 
-<p>定义数量级 （这里的<code>&lt;&lt;</code>表示左移操作，<code>1&lt;&lt;10</code>表示将1的二进制表示向左移10位，也就是由<code>1</code>变成了<code>10000000000</code>，也就是十进制的1024。同理<code>2&lt;&lt;2</code>表示将2的二进制表示向左移2位，也就是由<code>10</code>变成了<code>1000</code>，也就是十进制的8。）</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>		_  = <span class="hljs-literal">iota</span><br>		KB = <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">10</span> * <span class="hljs-literal">iota</span>)<br>		MB = <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">10</span> * <span class="hljs-literal">iota</span>)<br>		GB = <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">10</span> * <span class="hljs-literal">iota</span>)<br>		TB = <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">10</span> * <span class="hljs-literal">iota</span>)<br>		PB = <span class="hljs-number">1</span> &lt;&lt; (<span class="hljs-number">10</span> * <span class="hljs-literal">iota</span>)<br>	)<br></code></pre></td></tr></table></figure>
+<h2 id="访问map"><a href="#访问map" class="headerlink" title="访问map"></a>访问map</h2><p>可以通过下标key获得其值，例如：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	m1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>)<br>	m1[<span class="hljs-string">&quot;name&quot;</span>] = <span class="hljs-string">&quot;tom&quot;</span><br>	m1[<span class="hljs-string">&quot;age&quot;</span>] = <span class="hljs-string">&quot;20&quot;</span><br>	m1[<span class="hljs-string">&quot;email&quot;</span>] = <span class="hljs-string">&quot;tom@gmail.com&quot;</span><br><br>	name := m1[<span class="hljs-string">&quot;name&quot;</span>]<br>	age := m1[<span class="hljs-string">&quot;age&quot;</span>]<br>	email := m1[<span class="hljs-string">&quot;email&quot;</span>]<br>	fmt.Printf(<span class="hljs-string">&quot;name: %v\n&quot;</span>, name)<br>	fmt.Printf(<span class="hljs-string">&quot;age: %v\n&quot;</span>, age)<br>	fmt.Printf(<span class="hljs-string">&quot;email: %v\n&quot;</span>, email)<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>多个<code>iota</code>定义在一行</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>		a, b = <span class="hljs-literal">iota</span> + <span class="hljs-number">1</span>, <span class="hljs-literal">iota</span> + <span class="hljs-number">2</span> <span class="hljs-comment">//1,2 iota=0</span><br>		c, d                      <span class="hljs-comment">//2,3 iota=3, 定义常量时，如果多行 第二行没有表达式，那么默认和上面的一行保持一致。</span><br>                                  <span class="hljs-comment">// c,d = iota+1, iota+2</span><br>		e, f                      <span class="hljs-comment">//3,4</span><br>	)<br></code></pre></td></tr></table></figure>
+<h2 id="判断某个键是否存在"><a href="#判断某个键是否存在" class="headerlink" title="判断某个键是否存在"></a>判断某个键是否存在</h2><p>go语言中有个判断map中键是否存在的特殊写法，格式如下:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">value, ok := <span class="hljs-keyword">map</span>[key]<br></code></pre></td></tr></table></figure>
+
+<p>如果ok为<code>true</code>，存在；否则，不存在。</p>
+<p><strong>实例</strong></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	m1 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>)<br>	m1[<span class="hljs-string">&quot;name&quot;</span>] = <span class="hljs-string">&quot;tom&quot;</span><br>	m1[<span class="hljs-string">&quot;age&quot;</span>] = <span class="hljs-string">&quot;20&quot;</span><br>	m1[<span class="hljs-string">&quot;email&quot;</span>] = <span class="hljs-string">&quot;tom@gmail.com&quot;</span><br><br>	v, ok := m1[<span class="hljs-string">&quot;address&quot;</span>]<br>	<span class="hljs-keyword">if</span> ok &#123;<br>		fmt.Println(<span class="hljs-string">&quot;键存在&quot;</span>)<br>		fmt.Println(v)<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;键不存在&quot;</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">键不存在<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="遍历map"><a href="#遍历map" class="headerlink" title="遍历map"></a>遍历map</h2><p>可以使用<code>for range</code>循环进行map遍历，得到key和value值。</p>
+<h3 id="遍历key"><a href="#遍历key" class="headerlink" title="遍历key"></a>遍历key</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	 m := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>)<br>	 m[<span class="hljs-string">&quot;name&quot;</span>] = <span class="hljs-string">&quot;tom&quot;</span><br>	 m[<span class="hljs-string">&quot;age&quot;</span>] = <span class="hljs-string">&quot;20&quot;</span><br>	 m[<span class="hljs-string">&quot;email&quot;</span>] = <span class="hljs-string">&quot;tom@gmail.com&quot;</span><br><br>	 <span class="hljs-keyword">for</span> key := <span class="hljs-keyword">range</span> m&#123;<br>		 fmt.Println(key)<br>	 &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-keyword">name</span><br>age<br>email<br></code></pre></td></tr></table></figure>
+
+<h3 id="遍历key和value"><a href="#遍历key和value" class="headerlink" title="遍历key和value"></a>遍历key和value</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	 m := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>)<br>	 m[<span class="hljs-string">&quot;name&quot;</span>] = <span class="hljs-string">&quot;tom&quot;</span><br>	 m[<span class="hljs-string">&quot;age&quot;</span>] = <span class="hljs-string">&quot;20&quot;</span><br>	 m[<span class="hljs-string">&quot;email&quot;</span>] = <span class="hljs-string">&quot;tom@gmail.com&quot;</span><br><br>	 <span class="hljs-keyword">for</span> key, value := <span class="hljs-keyword">range</span> m&#123;<br>		 fmt.Println(key + <span class="hljs-string">&quot;:&quot;</span> +value)<br>	 &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>运行结果</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">name:</span>tom<br><span class="hljs-symbol">age:</span><span class="hljs-number">20</span><br><span class="hljs-symbol">email:</span>tom@gmail.com<br></code></pre></td></tr></table></figure>
+
+
 
 
                 
@@ -360,8 +387,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>golang-03-iota</div>
-      <div>https://bilbilmyc.github.io/2024/08/12/golang-03-iota/</div>
+      <div>golang-09-map</div>
+      <div>https://bilbilmyc.github.io/2024/08/13/golang-09-map/</div>
     </div>
     <div class="license-meta">
       
@@ -373,7 +400,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年8月12日</div>
+          <div>2024年8月13日</div>
         </div>
       
       
@@ -405,18 +432,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/08/13/golang-04-datatype/" title="golang-04-数据类型">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">golang-04-数据类型</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/08/12/golang-02-variable/" title="golang-02-变量">
-                        <span class="hidden-mobile">golang-02-变量</span>
+                      <a href="/2024/08/13/golang-08-silce/" title="golang-08-切片">
+                        <span class="hidden-mobile">golang-08-切片</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
